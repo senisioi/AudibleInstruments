@@ -1,5 +1,5 @@
 SLUG = AudibleInstruments
-VERSION = 0.6.3
+VERSION = 1.0
 
 FLAGS += \
 	-DTEST \

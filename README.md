@@ -1,5 +1,5 @@
 
-# Audible Instruments
+# Audible Instruments for Rack v1
 
 Based on [Mutable Instruments](https://mutable-instruments.net/) Eurorack modules.
 
