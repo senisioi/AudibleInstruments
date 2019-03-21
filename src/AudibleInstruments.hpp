@@ -11,10 +11,10 @@ extern Model *modelBraids;
 extern Model *modelPlaits;
 extern Model *modelElements;
 extern Model *modelTides;
-extern Model *modelClouds;
 extern Model *modelWarps;
 extern Model *modelRings;
 */
+extern Model *modelClouds;
 extern Model *modelLinks;
 /*
 extern Model *modelKinks;

@@ -12,9 +12,9 @@ void init(rack::Plugin *p) {
 	//p->addModel(modelPlaits);
 	//p->addModel(modelElements);
 	//p->addModel(modelTides);
-	//p->addModel(modelClouds);
 	//p->addModel(modelWarps);
 	//p->addModel(modelRings);
+	p->addModel(modelClouds);
 	p->addModel(modelLinks);
 	//p->addModel(modelKinks);
 	//p->addModel(modelShades);
