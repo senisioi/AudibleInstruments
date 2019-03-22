@@ -5,7 +5,7 @@
 #include "dsp/digital.hpp"
 #include "dsp/vumeter.hpp"
 #include "clouds/dsp/granular_processor.h"
-
+#include <iostream>
 
 struct Clouds : Module {
 	enum ParamIds {
@@ -84,7 +84,7 @@ struct Clouds : Module {
 
 
 	/*
-	json_t *toJson() override {
+	json_t *Module::toJson() override {
 		json_t *rootJ = json_object();
 
 		json_object_set_new(rootJ, "playback", json_integer((int) playback));
@@ -94,6 +94,7 @@ struct Clouds : Module {
 		return rootJ;
 	}
 
+	
 	void fromJson(json_t *rootJ) override {
 		json_t *playbackJ = json_object_get(rootJ, "playback");
 		if (playbackJ) {
@@ -114,7 +115,25 @@ struct Clouds : Module {
 };
 
 
-Clouds::Clouds() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {
+Clouds::Clouds(){
+	
+    config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+
+	params[POSITION_PARAM].config(0.0, 1.0, 0.5, "Position");
+	params[SIZE_PARAM].config(0.0, 1.0, 0.5, "Size");
+	params[PITCH_PARAM].config(-2.0, 2.0, 0.0, "Pitch");
+	params[IN_GAIN_PARAM].config(0.0, 1.0, 0.5, "InGain");
+	params[DENSITY_PARAM].config(0.0, 1.0, 0.5, "Density");
+	params[TEXTURE_PARAM].config(0.0, 1.0, 0.5, "Texture");
+	params[BLEND_PARAM].config(0.0, 1.0, 0.5, "Blend");
+	params[SPREAD_PARAM].config(0.0, 1.0, 0.0, "Spread");
+	params[FEEDBACK_PARAM].config(0.0, 1.0, 0.0, "Feedback");
+	params[REVERB_PARAM].config(0.0, 1.0, 0.0, "Reverb");
+	params[FREEZE_PARAM].config(0.0, 1.0, 0.0, "Freeze");
+	params[MODE_PARAM].config(0.0, 1.0, 0.0, "Mode");
+	params[LOAD_PARAM].config(0.0, 1.0, 0.0, "Load");
+
+
 	const int memLen = 118784;
 	const int ccmLen = 65536 - 128;
 	block_mem = new uint8_t[memLen]();
@@ -184,6 +203,7 @@ void Clouds::process(const ProcessArgs &args) {
 		p->position = clamp(params[POSITION_PARAM].getValue() + inputs[POSITION_INPUT].getVoltage() / 5.0f, 0.0f, 1.0f);
 		p->size = clamp(params[SIZE_PARAM].getValue() + inputs[SIZE_INPUT].getVoltage() / 5.0f, 0.0f, 1.0f);
 		p->pitch = clamp((params[PITCH_PARAM].getValue() + inputs[PITCH_INPUT].getVoltage()) * 12.0f, -48.0f, 48.0f);
+		//std::cout<<inputs[PITCH_INPUT].getVoltage()<<" "<<params[PITCH_PARAM].getValue()<<" "<<p->pitch<<"\n";
 		p->density = clamp(params[DENSITY_PARAM].getValue() + inputs[DENSITY_INPUT].getVoltage() / 5.0f, 0.0f, 1.0f);
 		p->texture = clamp(params[TEXTURE_PARAM].getValue() + inputs[TEXTURE_INPUT].getVoltage() / 5.0f, 0.0f, 1.0f);
 		p->dry_wet = params[BLEND_PARAM].getValue();
