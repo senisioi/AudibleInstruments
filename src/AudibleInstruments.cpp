@@ -19,7 +19,7 @@ void init(rack::Plugin *p) {
 	//p->addModel(modelKinks);
 	//p->addModel(modelShades);
 	//p->addModel(modelBranches);
-	//p->addModel(modelBlinds);
+	p->addModel(modelBlinds);
 	//p->addModel(modelVeils);
 	//p->addModel(modelFrames);
 	// p->addModel(modelPeaks);

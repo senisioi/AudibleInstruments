@@ -203,7 +203,6 @@ void Clouds::process(const ProcessArgs &args) {
 		p->position = clamp(params[POSITION_PARAM].getValue() + inputs[POSITION_INPUT].getVoltage() / 5.0f, 0.0f, 1.0f);
 		p->size = clamp(params[SIZE_PARAM].getValue() + inputs[SIZE_INPUT].getVoltage() / 5.0f, 0.0f, 1.0f);
 		p->pitch = clamp((params[PITCH_PARAM].getValue() + inputs[PITCH_INPUT].getVoltage()) * 12.0f, -48.0f, 48.0f);
-		//std::cout<<inputs[PITCH_INPUT].getVoltage()<<" "<<params[PITCH_PARAM].getValue()<<" "<<p->pitch<<"\n";
 		p->density = clamp(params[DENSITY_PARAM].getValue() + inputs[DENSITY_INPUT].getVoltage() / 5.0f, 0.0f, 1.0f);
 		p->texture = clamp(params[TEXTURE_PARAM].getValue() + inputs[TEXTURE_INPUT].getVoltage() / 5.0f, 0.0f, 1.0f);
 		p->dry_wet = params[BLEND_PARAM].getValue();

@@ -20,7 +20,9 @@ extern Model *modelLinks;
 extern Model *modelKinks;
 extern Model *modelShades;
 extern Model *modelBranches;
+*/
 extern Model *modelBlinds;
+/*
 extern Model *modelVeils;
 extern Model *modelFrames;
 extern Model *modelPeaks;
