@@ -57,11 +57,12 @@ struct Blinds : Module {
 		params[Blinds::MOD3_PARAM].config(-1.0, 1.0, 0.0, "Mod3");
 		params[Blinds::MOD4_PARAM].config(-1.0, 1.0, 0.0, "Mod4");
 	}
-	void step() override;
+	//void step() override;
+	void process(const ProcessArgs &args) override;
 };
 
 
-void Blinds::step() {
+void Blinds::process(const ProcessArgs &args) {
 	float out = 0.0;
 
 	for (int i = 0; i < 4; i++) {

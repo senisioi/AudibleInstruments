@@ -83,8 +83,7 @@ struct Clouds : Module {
 	}
 
 
-	/*
-	json_t *Module::toJson() override {
+	json_t *dataToJson() override {
 		json_t *rootJ = json_object();
 
 		json_object_set_new(rootJ, "playback", json_integer((int) playback));
@@ -95,7 +94,7 @@ struct Clouds : Module {
 	}
 
 	
-	void fromJson(json_t *rootJ) override {
+	void dataFromJson(json_t *rootJ) override {
 		json_t *playbackJ = json_object_get(rootJ, "playback");
 		if (playbackJ) {
 			playback = (clouds::PlaybackMode) json_integer_value(playbackJ);
@@ -111,7 +110,6 @@ struct Clouds : Module {
 			blendMode = json_integer_value(blendModeJ);
 		}
 	}
-	*/
 };
 
 
@@ -155,7 +153,7 @@ void Clouds::process(const ProcessArgs &args) {
 	// Get input
 	dsp::Frame<2> inputFrame = {};
 	if (!inputBuffer.full()) {
-		inputFrame.samples[0] = inputs[IN_L_INPUT].getVoltage() * params[IN_GAIN_PARAM].getValue() / 5.0;
+		inputFrame.samples[0] = inputs[IN_L_INPUT].getVoltage() * params[IN_GAIN_PARAM].getValue() / 5;
 		inputFrame.samples[1] = inputs[IN_R_INPUT].active ? inputs[IN_R_INPUT].getVoltage() * params[IN_GAIN_PARAM].getValue() / 5.0 : inputFrame.samples[0];
 		inputBuffer.push(inputFrame);
 	}
@@ -385,16 +383,17 @@ struct CloudsWidget : ModuleWidget {
 	void step() override {
 		Clouds *module = dynamic_cast<Clouds*>(this->module);
 
-		/*
-		if (blendParam)
-			blendParam->visible = (module->blendMode == 0);
-		if (spreadParam)
-			spreadParam->visible = (module->blendMode == 1);
-		if (feedbackParam)
-			feedbackParam->visible = (module->blendMode == 2);
-		if (reverbParam)
-			reverbParam->visible = (module->blendMode == 3);
-		*/
+		if (module)
+		{
+			if (blendParam)
+				blendParam->visible = (module->blendMode == 0);
+			if (spreadParam)
+				spreadParam->visible = (module->blendMode == 1);
+			if (feedbackParam)
+				feedbackParam->visible = (module->blendMode == 2);
+			if (reverbParam)
+				reverbParam->visible = (module->blendMode == 3);
+		}
 
 		ModuleWidget::step();
 	}

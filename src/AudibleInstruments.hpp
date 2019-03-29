@@ -6,8 +6,9 @@ using namespace rack;
 
 extern Plugin *pluginInstance;
 
-/*
+
 extern Model *modelBraids;
+/*
 extern Model *modelPlaits;
 extern Model *modelElements;
 extern Model *modelTides;
