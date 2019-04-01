@@ -107,7 +107,7 @@ Braids::Braids() {
 
 void Braids::process(const ProcessArgs &args) {
 	// Trigger
-	bool trig = inputs[TRIG_INPUT].value >= 1.0;
+	bool trig = inputs[TRIG_INPUT].getVoltage() >= 1.0;
 	if (!lastTrig && trig) {
 		osc.Strike();
 	}
@@ -115,10 +115,10 @@ void Braids::process(const ProcessArgs &args) {
 
 	// Render frames
 	if (outputBuffer.empty()) {
-		float fm = params[FM_PARAM].value * inputs[FM_INPUT].value;
+		float fm = params[FM_PARAM].getValue() * inputs[FM_INPUT].getVoltage();
 
 		// Set shape
-		int shape = roundf(params[SHAPE_PARAM].value * braids::MACRO_OSC_SHAPE_LAST_ACCESSIBLE_FROM_META);
+		int shape = roundf(params[SHAPE_PARAM].getValue() * braids::MACRO_OSC_SHAPE_LAST_ACCESSIBLE_FROM_META);
 		if (settings.meta_modulation) {
 			shape += roundf(fm / 10.0 * braids::MACRO_OSC_SHAPE_LAST_ACCESSIBLE_FROM_META);
 		}
@@ -128,14 +128,14 @@ void Braids::process(const ProcessArgs &args) {
 		osc.set_shape((braids::MacroOscillatorShape) settings.shape);
 
 		// Set timbre/modulation
-		float timbre = params[TIMBRE_PARAM].value + params[MODULATION_PARAM].value * inputs[TIMBRE_INPUT].value / 5.0;
-		float modulation = params[COLOR_PARAM].value + inputs[COLOR_INPUT].value / 5.0;
+		float timbre = params[TIMBRE_PARAM].getValue() + params[MODULATION_PARAM].getValue() * inputs[TIMBRE_INPUT].getVoltage() / 5.0;
+		float modulation = params[COLOR_PARAM].getValue() + inputs[COLOR_INPUT].getVoltage() / 5.0;
 		int16_t param1 = rescale(clamp(timbre, 0.0f, 1.0f), 0.0f, 1.0f, 0, INT16_MAX);
 		int16_t param2 = rescale(clamp(modulation, 0.0f, 1.0f), 0.0f, 1.0f, 0, INT16_MAX);
 		osc.set_parameters(param1, param2);
 
 		// Set pitch
-		float pitchV = inputs[PITCH_INPUT].value + params[COARSE_PARAM].value + params[FINE_PARAM].value / 12.0;
+		float pitchV = inputs[PITCH_INPUT].getVoltage() + params[COARSE_PARAM].getValue() + params[FINE_PARAM].getValue() / 12.0;
 		if (!settings.meta_modulation)
 			pitchV += fm;
 		if (lowCpu)
@@ -185,7 +185,7 @@ void Braids::process(const ProcessArgs &args) {
 	// Output
 	if (!outputBuffer.empty()) {
 		dsp::Frame<1> f = outputBuffer.shift();
-		outputs[OUT_OUTPUT].value = 5.0 * f.samples[0];
+		outputs[OUT_OUTPUT].setVoltage(5.0 * f.samples[0]);
 	}
 }
 

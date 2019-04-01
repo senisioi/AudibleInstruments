@@ -8,9 +8,9 @@ extern Plugin *pluginInstance;
 
 
 extern Model *modelBraids;
+extern Model *modelElements;
 /*
 extern Model *modelPlaits;
-extern Model *modelElements;
 extern Model *modelTides;
 extern Model *modelWarps;
 extern Model *modelRings;
